@@ -29,6 +29,7 @@ function Header() {
             </Menu.Item>
           </Link>
 
+          {user && 
           <Link href="/create">
             <Menu.Item header>
               <Icon
@@ -38,6 +39,8 @@ function Header() {
               Create
             </Menu.Item>
           </Link>
+          }
+
           { user ? 
             <>
               <Link href="/account">
