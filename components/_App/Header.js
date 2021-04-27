@@ -1,6 +1,12 @@
 import { Menu, Container, Image, Icon } from "semantic-ui-react"
 import Link from "next/link"
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
+import NProgress from "nprogress"
+
+Router.onRouteChangeStart = () => NProgress.start()
+Router.onRouteChangeComplete = () => NProgress.done()
+// If the new route doesn't exist
+Router.onRouteChangeError = () => NProgress.done()
 
 function Header() {
   // Hard coded user
@@ -11,8 +17,6 @@ function Header() {
   const isActive = (route) => {
     return route === router.pathname
   }
-
-  
   
 
   return (
