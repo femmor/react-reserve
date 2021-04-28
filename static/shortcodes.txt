@@ -1,0 +1,2 @@
+#Mongo import
+npx mongoimport --uri mongodb+srv://femmor2u:<password>@reactreserve.qh756.mongodb.net/<DB> --collection <collection> --type json --file <file-path> --jsonArray
