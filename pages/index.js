@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import axios from 'axios'
 
 function Home({ products }) {
@@ -12,7 +12,6 @@ function Home({ products }) {
   //   const response = await axios.get(`${url}`)
   //   console.log(response.data)
   // }
-
 
   return <>home</>;
 }
