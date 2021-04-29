@@ -1,15 +1,17 @@
 import React, {useState} from 'react'
 import { Form, Input, TextArea, Button, Image, Message, Header, Icon } from 'semantic-ui-react'
 
-function CreateProduct() {
-  const [product, setProduct] = useState({
+const INITIAL_PRODUCT = {
     name: '',
     price: '',
     media: '',
     description: ''
-  })
+}
 
+function CreateProduct() {
+  const [product, setProduct] = useState(INITIAL_PRODUCT)
   const [mediaPreview, setMediaPreview] = useState('')
+  const [success, setSuccess] = useState(false)
 
   const handleChange = (e) => {
     const {name, value, files} = e.target
@@ -28,13 +30,26 @@ function CreateProduct() {
     }
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setProduct(INITIAL_PRODUCT)
+    setSuccess(true)
+    console.log(product)
+  }
+
   return (
     <>
       <Header as="h2" block>
         <Icon name="add" color="orange"/>
         Create new product
       </Header>
-      <Form>
+      <Form onSubmit={handleSubmit} success={success}>
+        <Message
+          success
+          icon="check"
+          header="Success!"
+          content="Your product has been posted successfully!"
+        />
         <Form.Group widths="equal">
           <Form.Field 
             control={Input}
@@ -42,6 +57,7 @@ function CreateProduct() {
             label="Name"
             placeholder="Name"
             type="text"
+            value={product.name}
             onChange={handleChange}
           />
           <Form.Field 
@@ -52,6 +68,7 @@ function CreateProduct() {
             min="0.00"
             step="0.01"
             type="number"
+            value={product.price}
             onChange={handleChange}
           />
           <Form.Field 
@@ -70,6 +87,7 @@ function CreateProduct() {
           name="description"
           label="Description"
           placeholder="Description"
+          value={product.description}
           onChange={handleChange}
         />
         <Form.Field
