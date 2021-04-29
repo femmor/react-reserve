@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import { Form, Input, TextArea, Button, Image, Message, Header, Icon } from 'semantic-ui-react'
+import axios from 'axios'
+import baseUrl from "../utils/baseUrl"
 
 const INITIAL_PRODUCT = {
     name: '',
@@ -12,6 +14,7 @@ function CreateProduct() {
   const [product, setProduct] = useState(INITIAL_PRODUCT)
   const [mediaPreview, setMediaPreview] = useState('')
   const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
     const {name, value, files} = e.target
@@ -30,11 +33,30 @@ function CreateProduct() {
     }
   }
 
-  const handleSubmit = (e) => {
+
+  const handleImageUpload = async () => {
+    const data = new FormData()
+    data.append('file', product.media)
+    data.append('upload_preset', 'reactreserve')
+    data.append('cloud_name', 'femmycodes')
+    const response = await axios.post(process.env.CLOUDINARY_URL, data)
+    const mediaUrl = response.data.url
+    return mediaUrl
+  }
+
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
+    const mediaUrl = await handleImageUpload()
+    const url = `${baseUrl}/api/product`
+    const payload = { ...product, mediaUrl }
+    const response = await axios.post(url, payload)
+    console.log({ response })
+    setLoading(false)
     setProduct(INITIAL_PRODUCT)
     setSuccess(true)
-    console.log(product)
   }
 
   return (
@@ -43,7 +65,7 @@ function CreateProduct() {
         <Icon name="add" color="orange"/>
         Create new product
       </Header>
-      <Form onSubmit={handleSubmit} success={success}>
+      <Form onSubmit={handleSubmit} success={success} loading={loading}>
         <Message
           success
           icon="check"
@@ -96,6 +118,7 @@ function CreateProduct() {
           icon="pencil alternate"
           content="Submit"
           type="submit"
+          disabled={loading}
         />
       </Form>
     </>
