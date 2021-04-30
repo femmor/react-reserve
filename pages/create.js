@@ -62,7 +62,7 @@ function CreateProduct() {
       setProduct(INITIAL_PRODUCT)
       setSuccess(true)
     } catch (error) {
-      catchErrors(error, setError())
+      catchErrors(error, setError)
     } finally {
       setLoading(false)
     }
