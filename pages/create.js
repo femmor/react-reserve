@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Form, Input, TextArea, Button, Image, Message, Header, Icon } from 'semantic-ui-react'
 import baseUrl from "../utils/baseUrl"
 import axios from 'axios'
@@ -15,6 +15,12 @@ function CreateProduct() {
   const [mediaPreview, setMediaPreview] = useState('')
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [disabled, setDisabled] = useState(true)
+
+  useEffect(() => {
+    const isProduct = Object.values(product).every(el => Boolean(el)) 
+    isProduct ? setDisabled(false) : setDisabled(true)
+  }, [product])
 
   const handleChange = (e) => {
     const {name, value, files} = e.target
@@ -116,7 +122,7 @@ function CreateProduct() {
           icon="pencil alternate"
           content="Submit"
           type="submit"
-          disabled={loading}
+          disabled={disabled || loading}
         />
       </Form>
     </>
