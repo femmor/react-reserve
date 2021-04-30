@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Form, Input, TextArea, Button, Image, Message, Header, Icon } from 'semantic-ui-react'
-import axios from 'axios'
 import baseUrl from "../utils/baseUrl"
+import axios from 'axios'
 
 const INITIAL_PRODUCT = {
     name: '',
@@ -20,19 +20,18 @@ function CreateProduct() {
     const {name, value, files} = e.target
     // For media
     if (name === 'media') {
-      setProduct((...prevState) => ({
+      setProduct((prevState) => ({
         ...prevState,
         media : files[0]
       }))
       setMediaPreview(window.URL.createObjectURL(files[0]))
     } else {
-      setProduct((...prevState) => ({
+      setProduct((prevState) => ({
         ...prevState,
         [name] : value
       }))
     }
   }
-
 
   const handleImageUpload = async () => {
     const data = new FormData()
@@ -44,12 +43,11 @@ function CreateProduct() {
     return mediaUrl
   }
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     const mediaUrl = await handleImageUpload()
+    console.log({ mediaUrl })
     const url = `${baseUrl}/api/product`
     const payload = { ...product, mediaUrl }
     const response = await axios.post(url, payload)

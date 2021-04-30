@@ -36,9 +36,9 @@ async function handlePostRequest(req, res) {
   if(!name || !price || !mediaUrl || !description){
     return res.status(422).send('Product missing one or more fields')
   } 
-  const newProduct = await new Product({ name, price, mediaUrl, description }).save()
+  const product = await new Product({ name, price, mediaUrl, description }).save()
 
-  res.status(201).json(newProduct)
+  res.status(201).json(product)
 }
 
 // Delete single product
