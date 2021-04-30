@@ -32,13 +32,18 @@ async function handleGetRequest(req, res) {
 
 // Post product
 async function handlePostRequest(req, res) {
-  const {name, price, mediaUrl, description} = req.body
-  if(!name || !price || !mediaUrl || !description){
-    return res.status(422).send('Product missing one or more fields')
-  } 
-  const product = await new Product({ name, price, mediaUrl, description }).save()
+  try {
+    const {name, price, mediaUrl, description} = req.body
+    if(!name || !price || !mediaUrl || !description){
+      return res.status(422).send('Product missing one or more fields')
+    } 
+    const product = await new Product({ name, price, mediaUrl, description }).save()
 
-  res.status(201).json(product)
+    res.status(201).json(product)
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Server error creating product')
+  }
 }
 
 // Delete single product
