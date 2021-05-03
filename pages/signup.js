@@ -2,6 +2,9 @@ import React, {useState, useEffect} from "react"
 import {Button, Form, Icon, Message, Segment} from "semantic-ui-react"
 import Link from 'next/link'
 import catchErrors from "../utils/catchErrors"
+import axios from 'axios'
+import baseUrl from "../utils/baseUrl"
+import { handleLogin } from "../utils/auth"
 
 const INITIAL_USER = {
   name: "",
@@ -28,13 +31,17 @@ function Signup() {
     isUser ? setDisabled(false) : setDisabled(true)
   }, [user])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       setLoading(true)
       setError('')
       // make a request to signup user
-      
+      const url = `${baseUrl}/api/signup`
+      const payload = { ...user }
+      const response = await axios.post(url, payload)
+      handleLogin(response.data)
+
     } catch (error) {
       catchErrors(error, setError)
     } finally {
