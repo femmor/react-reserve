@@ -10,7 +10,7 @@ Router.onRouteChangeError = () => NProgress.done()
 
 function Header() {
   // Hard coded user
-  const user = true
+  const user = false
 
   const router = useRouter()
 
