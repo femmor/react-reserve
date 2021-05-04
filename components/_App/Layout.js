@@ -3,7 +3,7 @@ import { Container } from "semantic-ui-react";
 
 import Header from "./Header";
 
-function Layout({ children }) {
+function Layout({ children, user }) {
   return (
     <>
       <Head>
@@ -67,7 +67,7 @@ function Layout({ children }) {
         />
         <title>React Reserve eCommerce</title>
       </Head>
-      <Header />
+      <Header user={user}/>
       <Container text style={{ paddingTop: "1em" }}>
         {children}
       </Container>

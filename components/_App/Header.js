@@ -8,9 +8,7 @@ Router.onRouteChangeComplete = () => NProgress.done()
 // If the new route doesn't exist
 Router.onRouteChangeError = () => NProgress.done()
 
-function Header() {
-  // Hard coded user
-  const user = false
+function Header({ user }) {
 
   const router = useRouter()
 
